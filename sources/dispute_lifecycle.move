@@ -78,7 +78,7 @@ module dispute_os::dispute_lifecycle {
     
     /// Log a new milestone for a dispute
     public entry fun log_milestone(
-        actor: &signer,
+        actor: &signer, //use a string passed down from upstream to identify the actor.
         dispute_id: vector<u8>,
         milestone_type: u8,
         metadata_hash: vector<u8>,
