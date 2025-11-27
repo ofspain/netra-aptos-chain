@@ -1,0 +1,17 @@
+[package]
+name = "arbitoriumLedger"
+version = "1.0.0"
+authors = []
+
+[addresses]
+dispute_os = "0x0000000000000000000000000123456789abcdef00"
+
+[dev-addresses]
+
+[dependencies.AptosFramework]
+git = "https://github.com/aptos-labs/aptos-framework.git"
+rev = "mainnet"
+subdir = "aptos-framework"
+
+[dev-dependencies]
+
