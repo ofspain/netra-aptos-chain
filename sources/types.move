@@ -16,6 +16,7 @@ module dispute_os::dispute_types {
     // Global storage for the entire dispute system
     struct DisputeStore has key {
         milestones: table::Table<u64, DisputeMilestone>,
+        milestones_by_dispute: table::Table<vector<u8>, vector<u64>>,
         next_id: u64,
         total_disputes: u64,
     }

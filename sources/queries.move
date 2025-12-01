@@ -48,4 +48,32 @@ module dispute_os::dispute_queries {
         assert!(table::contains(&store.milestones, id), dispute_errors::emilestone_not_found());
         table::borrow(&store.milestones, id).actor_id
     }
+
+    public fun get_milestones_for_dispute(
+        owner: address,
+        dispute_id: vector<u8>,
+    ): vector<dispute_types::DisputeMilestone> acquires dispute_types::DisputeStore {
+
+        let store = borrow_global<dispute_types::DisputeStore>(owner);
+
+        if (!table::contains(&store.milestones_by_dispute, dispute_id)) {
+            return vector::empty<dispute_types::DisputeMilestone>()
+        };
+
+        let ids = table::borrow(&store.milestones_by_dispute, dispute_id);
+
+        let result = vector::empty<dispute_types::DisputeMilestone>();
+        let len = vector::length(ids);
+        let  i = 0;
+
+        while (i < len) {
+            let id = *vector::borrow(ids, i);
+            let m = table::borrow(&store.milestones, id);
+            vector::push_back(&mut result, *m);
+            i = i + 1;
+        };
+
+        result
+    }
+
 }
