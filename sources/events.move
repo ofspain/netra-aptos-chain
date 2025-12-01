@@ -9,7 +9,7 @@ module dispute_os::dispute_events {
         metadata_hash: vector<u8>,
         rule_hash: vector<u8>,
         timestamp: u64,
-        actor: address,
+        actor_id: vector<u8>,
         milestone_id: u64,
     }
     // Event emitted when system is initialized

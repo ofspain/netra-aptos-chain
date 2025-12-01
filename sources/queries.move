@@ -42,10 +42,10 @@ module dispute_os::dispute_queries {
     }
     
     /// Get milestone actor
-    public fun get_milestone_actor(addr: address, id: u64): address acquires dispute_types::DisputeStore {
+    public fun get_milestone_actor(addr: address, id: u64): vector<u8> acquires dispute_types::DisputeStore {
         assert!(exists<dispute_types::DisputeStore>(addr), dispute_errors::enot_published());
         let store = borrow_global<dispute_types::DisputeStore>(addr);
         assert!(table::contains(&store.milestones, id), dispute_errors::emilestone_not_found());
-        table::borrow(&store.milestones, id).actor
+        table::borrow(&store.milestones, id).actor_id
     }
 }

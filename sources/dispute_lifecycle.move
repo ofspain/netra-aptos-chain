@@ -78,20 +78,21 @@ module dispute_os::dispute_lifecycle {
     
     /// Log a new milestone for a dispute
     public entry fun log_milestone(
-        actor: &signer, //use a string passed down from upstream to identify the actor.
+        admin: &signer,
+        actor_id: vector<u8>,
         dispute_id: vector<u8>,
         milestone_type: u8,
         metadata_hash: vector<u8>,
         rule_hash: vector<u8>
     ) acquires dispute_types::DisputeStore, dispute_events::DisputeEventStore {
-        let actor_addr = signer::address_of(actor);
+         let admin_addr = signer::address_of(admin);
         
         // Verify system is initialized
-        assert!(exists<dispute_types::DisputeStore>(actor_addr), dispute_errors::enot_published());
-        assert!(exists<dispute_events::DisputeEventStore>(actor_addr), dispute_errors::enot_published());
+        assert!(exists<dispute_types::DisputeStore>(admin_addr), dispute_errors::enot_published());
+        assert!(exists<dispute_events::DisputeEventStore>(admin_addr), dispute_errors::enot_published());
         
-        let store = borrow_global_mut<dispute_types::DisputeStore>(actor_addr);
-        let event_store = borrow_global_mut<dispute_events::DisputeEventStore>(actor_addr);
+        let store = borrow_global_mut<dispute_types::DisputeStore>(admin_addr);
+        let event_store = borrow_global_mut<dispute_events::DisputeEventStore>(admin_addr);
         
         // Create milestone
         let milestone = dispute_types::DisputeMilestone {
@@ -99,7 +100,7 @@ module dispute_os::dispute_lifecycle {
             milestone_type,
             metadata_hash,
             timestamp: timestamp::now_seconds(),
-            actor: actor_addr,
+            actor_id,
             rule_hash,
         };
         
@@ -122,7 +123,7 @@ module dispute_os::dispute_lifecycle {
                 metadata_hash: vector::empty(), // Already consumed
                 rule_hash: vector::empty(), // Already consumed
                 timestamp: timestamp::now_seconds(),
-                actor: actor_addr,
+                actor_id: actor_id,
                 milestone_id,
             }
         );

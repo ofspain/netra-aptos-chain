@@ -9,7 +9,7 @@ module dispute_os::dispute_types {
         milestone_type: u8,
         metadata_hash: vector<u8>,
         timestamp: u64,
-        actor: address,
+        actor_id: vector<u8>,
         rule_hash: vector<u8>,
     }
     
