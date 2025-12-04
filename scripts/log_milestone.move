@@ -1,7 +1,7 @@
 script {
     use dispute_os::dispute_lifecycle;
     
-    fun main(
+    fun main_(
         admin: signer,
         actor_id: vector<u8>,
         dispute_id: vector<u8>,
@@ -9,13 +9,13 @@ script {
         metadata_hash: vector<u8>,
         rule_hash: vector<u8>
     ) {
-        dispute_lifecycle::log_milestone(
-            &admin,
-            actor_id,
-            dispute_id,
-            milestone_type,
-            metadata_hash,
-            rule_hash
-        );
+        // dispute_lifecycle::log_milestone(
+        //     &admin,
+        //     actor_id,
+        //     dispute_id,
+        //     milestone_type,
+        //     metadata_hash,
+        //     rule_hash
+        // );
     }
 }
